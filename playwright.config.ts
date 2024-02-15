@@ -47,7 +47,7 @@ export default defineConfig({
          */
         locale: 'de-Ger',
         geolocation: { longitude: 12.492507, latitude: 41.889938 },
-        timezoneId: 'de-Ger',
+        timezoneId: 'Europe/Paris',
         permissions: ['geolocation'],
     },
 
@@ -57,13 +57,21 @@ export default defineConfig({
             name: 'chromium',
             use: {
                 ...devices['Desktop Chrome'],
+                browserName: 'chromium',
+                launchOptions: {
+                    executablePath: 'C:\\Users\\A11336979\\AppData\\Local\\ms-playwright\\chrome-win\\chrome.exe'
+                },
                 baseURL: 'http://develop.simplardev.telekom.de/auth',
             },
         },
         /* Test against branded browsers. */
         {
             name: 'Google Chrome',
-            use: { ...devices['Desktop Chrome'], channel: 'chrome' }, // or 'chrome-beta'
+            use: {
+                ...devices['Desktop Chrome'],
+                channel: 'chrome',
+                baseURL: 'http://develop.simplardev.telekom.de/auth',
+            }, // or 'chrome-beta'
         },
         {
             name: 'Microsoft Edge',

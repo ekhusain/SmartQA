@@ -2,6 +2,32 @@
 <suite name="Suite1" verbose="1" thread-count="10" configfailurepolicy="continue" parallel="false">
 
 
+    <test name="Basic_Test_Suite">
+<!--        <groups>-->
+<!--            <dependencies>-->
+<!--                <group name="g_testS1AnfrageErstellt" depends-on="g_testNeuesVorhabenAnlegen"/>-->
+<!--                <group name="g_testS2AngebotserstellerZugeordnet" depends-on="g_testS1AnfrageErstellt"/>-->
+<!--                <group name="g_testS3BearbeitungBeginnen" depends-on="g_testS2AngebotserstellerZugeordnet"/>-->
+<!--                <group name="g_testKalkulationImport" depends-on="g_testS3BearbeitungBeginnen"/>-->
+<!--                <group name="g_testWorkflowFunctions" depends-on="g_testKalkulationImport"/>-->
 
+<!--            </dependencies>-->
+<!--        </groups>-->
+        <classes>
+            <class name="tests.BasicSuite">
+                <methods>
+                    <include name="testNeuesVorhabenAnlegen"/>
+                    <include name="testS1AnfrageErstellt"/>
+                    <include name="testS2AngebotserstellerZugeordnet"/>
+                    <include name="testS3BearbeitungBeginnen"/>
+                    <include name="testKalkulationImport"/>
+                    <include name="testWorkflowFunctions"/>
+                    <include name="testAngebotBeauftragung"/>
+                    <include name="testProduktionsreifeBestaetigen"/>
+                    <include name="testS7AuftragBeenden"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 
 </suite>
