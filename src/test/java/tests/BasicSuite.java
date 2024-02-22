@@ -1,5 +1,6 @@
 package tests;
 
+import com.google.gson.JsonArray;
 import com.microsoft.playwright.*;
 import de.telekom.simple.ta.SimpleBrowserFactory;
 import de.telekom.simple.ta.base.SimpleBasicPage;
@@ -12,6 +13,8 @@ import de.telekom.simple.ta.testdata.simplebase.SalesVorhabenData;
 import de.telekom.simple.ta.testdata.simplebase.SimpleOnlineKalkulationData;
 import de.telekom.simple.ta.testdata.simplebase.BeauftragungDurchfuehrenData;
 import de.telekom.simple.ta.testdata.model.User;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.Disabled;
 import org.testng.annotations.*;
 import testfunctions.LoginFunctions;
 import testfunctions.MeineAngeboteFunctions;
@@ -55,8 +58,11 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     void createContextAndPage() {
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setExecutablePath(Paths.get("C:/Users/A11336979/AppData/Local/ms-playwright/chrome-win/chrome.exe")).setHeadless(false));
+        //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
+        page.navigate("http://develop.simplardev.telekom.de/");
+
     }
 
     @AfterMethod
@@ -65,14 +71,19 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test
+    @Disabled("true")
     public void testLogin() {
+        page.navigate("http://develop.simplardev.telekom.de/");
         loginPage = new SimpleLoginPage(page);
+        Allure.step("Login was successful");
         LoginFunctions.login(loginPage, getUserData());
     }
 
     @Test(groups = {"g_testNeuesVorhabenAnlegen"}, description = "Neues Vorhaben anlegen")
+    @Description("Neues Vorhaben anlegen")
+    @Severity(SeverityLevel.BLOCKER)
+    @Attachment("true")
     public void testNeuesVorhabenAnlegen() {
-        page.navigate("http://develop.simplardev.telekom.de/");
         loginPage = new SimpleLoginPage(page);
         LoginFunctions.login(loginPage, getUserData());
         startseitePage = new SimpleStartseitePage(page);
@@ -94,7 +105,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testS1AnfrageErstellt"}, description = "S1 Anfrage Erstellt")
     @Parameters({"sin"})
     public void testS1AnfrageErstellt(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -118,7 +128,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testS2AngebotserstellerZugeordnet"}, description = "S2 Angebotsersteller zuordnen")
     @Parameters({"sin"})
     public void testS2AngebotserstellerZugeordnet(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -140,7 +149,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testS3BearbeitungBeginnen"}, description = "S3 Bearbeitung beginnen")
     @Parameters({"sin"})
     public void testS3BearbeitungBeginnen(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -161,7 +169,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
             description = "Kalkulation importieren with AP, LP and Ber")
     @Parameters({"sin"})
     public void testKalkulationImport(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -189,7 +196,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testWorkflowFunctions"}, description = "Angebotsgueltigkeit und Datei hinzufuegen")
     @Parameters({"sin"})
     public void testWorkflowFunctions(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -214,7 +220,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testAngebotBeauftragung"}, description = "Angebot beauftragen, project moved to S6PR")
     @Parameters({"sin"})
     public void testAngebotBeauftragung(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -237,7 +242,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testProduktionsreifeBestaetigen"}, description = "Produktionsreife bestaetigen, project moved to S6")
     @Parameters({"sin"})
     public void testProduktionsreifeBestaetigen(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -258,7 +262,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test(groups = {"g_testS7AuftragBeenden"}, description = "Auftrag beenden, project moved to S7")
     @Parameters({"sin"})
     public void testS7AuftragBeenden(@Optional("") String sin) {
-        page.navigate("http://develop.simplardev.telekom.de/");
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 

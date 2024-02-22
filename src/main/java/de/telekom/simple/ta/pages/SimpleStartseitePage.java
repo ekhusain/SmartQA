@@ -21,7 +21,7 @@ public class SimpleStartseitePage {
         this.neuesVorhabenAnlegen = page.getByTitle("Neues Vorhaben anlegen");
         this.anfrageListeISP = page.locator("//span[contains(.,'Anfrageliste ISP')]");
 
-        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Meine Vorhaben"))).isVisible();
+        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Startseite"))).isVisible();
     }
 
     public NeuesVorhabenAnlegenPage doNeuesVorhabenAnlegen() {

@@ -13,7 +13,6 @@ public class SimpleLoginPage {
 
     public SimpleLoginPage(Page page) {
         this.page = page;
-        //this.username = page.getByTestId("username-input");
         this.username = page.locator("//input[@id='username-input']");
         this.password = page.locator("//input[@id='password-input']");
         this.loginButton = page.locator("//button[contains(., 'Anmelden')]");
