@@ -7,11 +7,8 @@ import com.microsoft.playwright.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SimpleBrowserFactory {
-
     Playwright playwright;
     Browser browser;
     BrowserContext browserContext;

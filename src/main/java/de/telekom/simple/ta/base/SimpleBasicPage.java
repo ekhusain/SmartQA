@@ -22,7 +22,7 @@ public class SimpleBasicPage {
 
     public SimpleBasicPage(Page page) {
         this.page = page;
-        this.toastMsg = page.locator("toasts-component");
+        this.toastMsg = page.locator("//div[@class='toasts-component']");
         this.errorMsg = page.locator("//body/pre[@class='cake-error']");
         this.toastMsgSuccess = page.locator("//*[@class='b-toast b-toast-append flash-message success']");
         this.toastMsgError = page.locator("//*[@class='b-toast b-toast-append flash-message error']");

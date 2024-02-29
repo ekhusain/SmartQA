@@ -1,6 +1,5 @@
 package tests;
 
-import com.google.gson.JsonArray;
 import com.microsoft.playwright.*;
 import de.telekom.simple.ta.SimpleBrowserFactory;
 import de.telekom.simple.ta.base.SimpleBasicPage;
@@ -57,8 +56,9 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @BeforeMethod
     void createContextAndPage() {
         playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setExecutablePath(Paths.get("C:/Users/A11336979/AppData/Local/ms-playwright/chrome-win/chrome.exe")).setHeadless(false));
+        //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setExecutablePath(Paths.get("C:/Users/A11336979/AppData/Local/ms-playwright/chrome-win/chrome.exe")).setHeadless(false));
         //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
         page.navigate("http://develop.simplardev.telekom.de/");
@@ -74,6 +74,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Disabled("true")
     public void testLogin() {
         page.navigate("http://develop.simplardev.telekom.de/");
+        //page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("screenshot.png")));
         loginPage = new SimpleLoginPage(page);
         Allure.step("Login was successful");
         LoginFunctions.login(loginPage, getUserData());

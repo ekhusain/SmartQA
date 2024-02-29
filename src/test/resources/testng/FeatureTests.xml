@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite1" verbose="1" thread-count="10" configfailurepolicy="continue" parallel="false">
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+    </listeners>
+    <test name="SuiteOnkaTests">
+        <classes>
+            <class name="tests.SuiteOnkaTests">
+                <parameter name="sin" value=""/>
+                <methods>
+                    <include name="testCreateLP"/>
+                    <include name="testEditLP"/>
+                    <include name="testDeleteLP"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+</suite>

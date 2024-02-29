@@ -3,6 +3,7 @@ package de.telekom.simple.ta.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import de.telekom.simple.ta.pages.offer.OfferDashboardPage;
+import de.telekom.simple.ta.pages.onka.LeistungenTabPage;
 import de.telekom.simple.ta.pages.sales.SalesDashboardStammdatenPage;
 
 public class SimpleAlertPage {
@@ -22,6 +23,11 @@ public class SimpleAlertPage {
     public SalesDashboardStammdatenPage doBestaetigen() {
         page.locator("//button[contains(., 'Bestätigen')]").click();
         return new SalesDashboardStammdatenPage(page);
+    }
+
+    public LeistungenTabPage doLpLoschen() {
+        page.locator("//button[contains(., 'Leistungsposition löschen')]").click();
+        return new LeistungenTabPage(page);
     }
 
 }
