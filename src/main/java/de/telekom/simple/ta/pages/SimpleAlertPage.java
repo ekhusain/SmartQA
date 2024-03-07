@@ -30,4 +30,9 @@ public class SimpleAlertPage {
         return new LeistungenTabPage(page);
     }
 
+    public LeistungenTabPage doElementLoschen() {
+        page.locator("//button[contains(., 'Element löschen')]").click();
+        return new LeistungenTabPage(page);
+    }
+
 }

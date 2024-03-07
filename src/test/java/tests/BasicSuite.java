@@ -57,8 +57,8 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     void createContextAndPage() {
         playwright = Playwright.create();
         //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setExecutablePath(Paths.get("C:/Users/A11336979/AppData/Local/ms-playwright/chrome-win/chrome.exe")).setHeadless(false));
-        //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false));
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
+        //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
         page.navigate("http://develop.simplardev.telekom.de/");
@@ -139,7 +139,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
         AnfragelisteIspPage anfragelisteIspPage = startseitePage.openAnfrageListeISP();
         AngebotserstellerZuordnenPage zuordnenPage = anfragelisteIspPage.angebotserstellerZuweisen(sin);
-        zuordnenPage.fillSuchenText("Administrator1010");
+        zuordnenPage.fillSuchenText("Administrator1011");
         anfragelisteIspPage = zuordnenPage.doZuordnen();
         anfragelisteIspPage.selectFilterSuchenStatus();
         anfragelisteIspPage.verifySin(sin);
@@ -281,8 +281,6 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         stammdatenPage.doLogout();
     }
 
-
-
     public static SalesVorhabenData getTestDataS0() {
         SalesVorhabenData vorhabenData = new SalesVorhabenData();
         // setup further project data
@@ -296,7 +294,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
     public static User getUserData() {
         User userData = new User();
-        userData.setBenutzername("test1010.admin");
+        userData.setBenutzername("test1011.admin");
         userData.setPasswort("test.admin01");
         return userData;
     }

@@ -25,6 +25,18 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.33</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>mssql-jdbc</artifactId>
+                <version>12.6.1.jre11</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -34,12 +46,6 @@
             <artifactId>playwright</artifactId>
             <version>1.40.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>junit</groupId>-->
-<!--            <artifactId>junit</artifactId>-->
-<!--            <version>4.13</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

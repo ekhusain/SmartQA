@@ -7,7 +7,7 @@
     <inspection_tool class="groupsTestNG" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="groups">
         <value>
-          <list size="9">
+          <list size="15">
             <item index="0" class="java.lang.String" itemvalue="g_testKalkulationImport" />
             <item index="1" class="java.lang.String" itemvalue="g_testS3BearbeitungBeginnen" />
             <item index="2" class="java.lang.String" itemvalue="g_testS2AngebotserstellerZugeordnet" />
@@ -17,6 +17,12 @@
             <item index="6" class="java.lang.String" itemvalue="g_testAngebotBeauftragung" />
             <item index="7" class="java.lang.String" itemvalue="g_testProduktionsreifeBestaetigen" />
             <item index="8" class="java.lang.String" itemvalue="g_testS7AuftragBeenden" />
+            <item index="9" class="java.lang.String" itemvalue="g_createLP" />
+            <item index="10" class="java.lang.String" itemvalue="g_testEditLP" />
+            <item index="11" class="java.lang.String" itemvalue="g_testDeleteLP" />
+            <item index="12" class="java.lang.String" itemvalue="g_testCreateElement" />
+            <item index="13" class="java.lang.String" itemvalue="g_testEditElement" />
+            <item index="14" class="java.lang.String" itemvalue="g_testDeleteElement" />
           </list>
         </value>
       </option>

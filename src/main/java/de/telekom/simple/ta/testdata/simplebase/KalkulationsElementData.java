@@ -181,6 +181,7 @@ public class KalkulationsElementData {
     public Short getAufwandStunden() {
         return aufwandStunden;
     }
+    public void setAufwandStunden(Short aufwandStunden) { this.aufwandStunden = aufwandStunden; }
 
     public Short getAufwandStundenOld() {
         return aufwandStundenOld;

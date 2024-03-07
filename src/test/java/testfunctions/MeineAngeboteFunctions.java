@@ -4,10 +4,12 @@ import de.telekom.simple.ta.pages.SimpleAlertPage;
 import de.telekom.simple.ta.pages.offer.OfferDashboardPage;
 import de.telekom.simple.ta.pages.onka.LeistungenTabPage;
 import de.telekom.simple.ta.pages.onka.NeueLeistungspositionPage;
+import de.telekom.simple.ta.pages.onka.NeuesElementHinzufuegenPage;
 import de.telekom.simple.ta.pages.sales.KlassifizierungBearbeitenPage;
 import de.telekom.simple.ta.pages.sales.KundeSuchenPage;
 import de.telekom.simple.ta.pages.sales.NeuesVorhabenAnlegenPage;
 import de.telekom.simple.ta.pages.sales.SalesDashboardStammdatenPage;
+import de.telekom.simple.ta.testdata.simplebase.KalkulationsElementData;
 import de.telekom.simple.ta.testdata.simplebase.LeistungspositionInputData;
 import de.telekom.simple.ta.testdata.simplebase.SalesVorhabenData;
 
@@ -50,7 +52,7 @@ public class MeineAngeboteFunctions {
     public static LeistungenTabPage doLPBearbeiten(OfferDashboardPage offerDashboardPage, List<LeistungspositionInputData> inputDataList) {
         LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
         for (LeistungspositionInputData inputData: inputDataList) {
-            NeueLeistungspositionPage neueLeistungspositionPage = leistungenTabPage.doLPBearbeitung(inputData.getLeistungspositionName());
+            NeueLeistungspositionPage neueLeistungspositionPage = leistungenTabPage.doLPBearbeitung(inputData.getLeistungspositionNameOld());
             neueLeistungspositionPage.fillLPEditData(inputData);
             neueLeistungspositionPage.doLpBearbeiten();
             leistungenTabPage.verifyFlashMsgSuccessContains("Erfolgreich gespeichert.");
@@ -69,6 +71,47 @@ public class MeineAngeboteFunctions {
         return leistungenTabPage;
     }
 
+    public static LeistungenTabPage doNeuesElement(OfferDashboardPage offerDashboardPage, List<KalkulationsElementData> inputDataList) {
+        LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
+        for (KalkulationsElementData inputData: inputDataList) {
+            for (int i = 0; i < inputData.getLeistungspositionsBezeichnung().length; i++) {
+                leistungenTabPage.doShowLPDetails(inputData.getLeistungspositionsBezeichnung()[i]);
+                NeuesElementHinzufuegenPage elementHinzufuegenPage = leistungenTabPage.doNeuesElement(inputData.getLeistungspositionsBezeichnung()[i]);
+                elementHinzufuegenPage.fillElementData(inputData);
+                elementHinzufuegenPage.doElementAnlegen();
+                leistungenTabPage.verifyFlashMsgSuccessContains("Elemente erfolgreich gespeichert");
+                leistungenTabPage.verifyElement(inputData.getLeistungspositionsBezeichnung()[i], inputData.getBezeichnung());
+            }
+        }
+        return leistungenTabPage;
+    }
 
+    public static LeistungenTabPage doElementBearbeiten(OfferDashboardPage offerDashboardPage, List<KalkulationsElementData> inputDataList) {
+        LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
+        for (KalkulationsElementData inputData: inputDataList) {
+            for (int i = 0; i < inputData.getLeistungspositionsBezeichnung().length; i++) {
+                leistungenTabPage.doShowLPDetails(inputData.getLeistungspositionsBezeichnung()[i]);
+                NeuesElementHinzufuegenPage elementHinzufuegenPage = leistungenTabPage.doElementEdit(inputData.getBezeichnungOld());
+                elementHinzufuegenPage.fillElementData(inputData);
+                elementHinzufuegenPage.doElementAnlegen();
+                leistungenTabPage.verifyFlashMsgSuccessContains("Element wurden erfolgreich aktualisiert.");
+                leistungenTabPage.verifyElement(inputData.getLeistungspositionsBezeichnung()[i], inputData.getBezeichnung());
+            }
+        }
+        return leistungenTabPage;
+    }
+
+    public static LeistungenTabPage doDeleteElement(OfferDashboardPage offerDashboardPage, List<KalkulationsElementData> inputDataList) {
+        LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
+        for (KalkulationsElementData inputData: inputDataList) {
+            for (int i = 0; i < inputData.getLeistungspositionsBezeichnung().length; i++) {
+                leistungenTabPage.doShowLPDetails(inputData.getLeistungspositionsBezeichnung()[i]);
+                SimpleAlertPage alertPage = leistungenTabPage.doElementDelete(inputData.getBezeichnung());
+                alertPage.doElementLoschen();
+                leistungenTabPage.verifyFlashMsgSuccessContains("Element wurde erfolgreich gelöscht.");
+            }
+        }
+        return leistungenTabPage;
+    }
 
 }

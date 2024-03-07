@@ -44,9 +44,14 @@ public class LeistungenTabPage extends SimpleBasicPage {
         assertThat(page.locator("//tbody/tr/td[contains(., '" + lpName.getLeistungspositionName() + "')]")).isVisible();
     }
 
-    public BrowserContext doNeuesElement(String lpName) {
-        page.locator("//tbody/tr/td[contains(., '"+ lpName + "')]/following::button[@title='Neues Element']").click();
+    public BrowserContext doShowLPDetails(String lpName) {
+        page.locator("//tbody/tr/td[contains(., '"+ lpName + "')]/button[@title='Details öffnen']").click();
         return page.context();
+    }
+
+    public NeuesElementHinzufuegenPage doNeuesElement(String lpName) {
+        page.locator("//tbody/tr/td[contains(., '"+ lpName + "')]/following::button[@title='Neues Element']").click();
+        return new NeuesElementHinzufuegenPage(page);
     }
 
     public BrowserContext doNeuesBerechnung(String lpName) {
@@ -71,6 +76,27 @@ public class LeistungenTabPage extends SimpleBasicPage {
 
     public SimpleAlertPage doLPDelete(String lpName) {
         page.locator("//tbody/tr/td[contains(., '"+ lpName + "')]/following::button[@title='Leistungsposition löschen']").click();
+        return new SimpleAlertPage(page);
+    }
+
+    public void verifyElement(String lpName, String elData) {
+        assertThat(page.locator("//tbody/tr/td[contains(., '" + lpName + "')]")).isVisible();
+        assertThat(page.locator("//table/tr/td[contains(., '" + elData + "')]")).isVisible();
+    }
+
+    public BrowserContext doCreateElementBer(String lpName, String elName) {
+        doShowLPDetails(lpName);
+        page.locator("//table/tr/td[contains(., '" + elName + "')]/following::button[1]").click();
+        return page.context();
+    }
+
+    public NeuesElementHinzufuegenPage doElementEdit(String elName) {
+        page.locator("//table/tr/td[contains(., '" + elName + "')]/following::button[2]").click();
+        return new NeuesElementHinzufuegenPage(page);
+    }
+
+    public SimpleAlertPage doElementDelete(String elName) {
+        page.locator("//table/tr/td[contains(., '" + elName + "')]/following::button[3]").click();
         return new SimpleAlertPage(page);
     }
 

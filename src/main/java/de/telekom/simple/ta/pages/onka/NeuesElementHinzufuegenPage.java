@@ -4,9 +4,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import de.telekom.simple.ta.enums.KostenartItems;
 import de.telekom.simple.ta.testdata.simplebase.KalkulationsElementData;
-import de.telekom.simple.ta.testdata.simplebase.LeistungspositionInputData;
 import de.telekom.simple.ta.utils.FieldInputUtils;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -45,13 +43,14 @@ public class NeuesElementHinzufuegenPage extends LeistungenTabPage {
         assertThat(page.locator("//label[@id='element-beschreibung__label']")).isVisible();
     }
 
-    public void fillLPData(KalkulationsElementData elData) {
+    public void fillElementData(KalkulationsElementData elData) {
         elName.fill(elData.getBezeichnung());
         FieldInputUtils.select2IfNotNull(page, kostenart, elData.getKostenart().toSelectString());
-
+        hour.fill(elData.getAufwandStunden().toString());
+        taetigkeitsbeschreibung.fill(elData.getBeschreibung());
     }
 
-    public BrowserContext doLPAnlegen() {
+    public BrowserContext doElementAnlegen() {
         elementAnlegenButton.click();
         return page.context();
     }
