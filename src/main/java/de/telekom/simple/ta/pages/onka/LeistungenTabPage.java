@@ -54,9 +54,9 @@ public class LeistungenTabPage extends SimpleBasicPage {
         return new NeuesElementHinzufuegenPage(page);
     }
 
-    public BrowserContext doNeuesBerechnung(String lpName) {
+    public BerechnungErstellenPage doNeueLPBerechnung(String lpName) {
         page.locator("//tbody/tr/td[contains(., '"+ lpName + "')]/following::button[@title='Neue Berechnung']").click();
-        return page.context();
+        return new BerechnungErstellenPage(page);
     }
 
     public BrowserContext doLPVerteilen(String lpName) {
@@ -97,6 +97,16 @@ public class LeistungenTabPage extends SimpleBasicPage {
 
     public SimpleAlertPage doElementDelete(String elName) {
         page.locator("//table/tr/td[contains(., '" + elName + "')]/following::button[3]").click();
+        return new SimpleAlertPage(page);
+    }
+
+    public BerechnungErstellenPage doLPBerEdit(String berName) {
+        page.locator("//table/tr/td[contains(., '" + berName + "')]/following::button[1]").click();
+        return new BerechnungErstellenPage(page);
+    }
+
+    public SimpleAlertPage doLPBerechnungDelete(String berName) {
+        page.locator("//table/tr/td[contains(., '" + berName + "')]/following::button[2]").click();
         return new SimpleAlertPage(page);
     }
 

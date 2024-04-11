@@ -10,12 +10,6 @@
                     <group name="g_testS1AnfrageErstellt" depends-on="g_testNeuesVorhabenAnlegen"/>
                     <group name="g_testS2AngebotserstellerZugeordnet" depends-on="g_testS1AnfrageErstellt"/>
                     <group name="g_testS3BearbeitungBeginnen" depends-on="g_testS2AngebotserstellerZugeordnet"/>
-                    <group name="g_createLP" depends-on="g_testS3BearbeitungBeginnen"/>
-                    <group name="g_testEditLP" depends-on="g_createLP"/>
-                    <group name="g_testCreateElement" depends-on="g_testEditLP"/>
-                    <group name="g_testEditElement" depends-on="g_testCreateElement"/>
-                    <group name="g_testDeleteElement" depends-on="g_testEditElement"/>
-                    <group name="g_testDeleteLP" depends-on="g_testDeleteElement"/>
                 </dependencies>
             </groups>
         <classes>
@@ -28,7 +22,7 @@
                 </methods>
             </class>
             <class name="tests.SuiteOnkaTests">
-<!--                <parameter name="sin" value=""/>-->
+<!--                <parameter name="sin" value="1210499"/>-->
                 <methods>
                     <include name="testCreateLP"/>
                     <include name="testEditLP"/>

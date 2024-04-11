@@ -26,10 +26,8 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     SimpleBrowserFactory pf;
     // New instance for each test method.
     BrowserContext context;
-
     Playwright playwright;
     Browser browser;
-
     Page page;
 
     SimpleBasicPage basicPage;
@@ -61,7 +59,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("msedge").setHeadless(false));
         context = browser.newContext();
         page = context.newPage();
-        page.navigate("http://develop.simplardev.telekom.de/");
+        page.navigate("https://develop.simplardev.telekom.de/");
 
     }
 
@@ -73,7 +71,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Test
     @Disabled("true")
     public void testLogin() {
-        page.navigate("http://develop.simplardev.telekom.de/");
+        page.navigate("https://develop.simplardev.telekom.de/");
         //page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("screenshot.png")));
         loginPage = new SimpleLoginPage(page);
         Allure.step("Login was successful");
@@ -139,7 +137,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
         AnfragelisteIspPage anfragelisteIspPage = startseitePage.openAnfrageListeISP();
         AngebotserstellerZuordnenPage zuordnenPage = anfragelisteIspPage.angebotserstellerZuweisen(sin);
-        zuordnenPage.fillSuchenText("Administrator1011");
+        zuordnenPage.fillSuchenText("Administrator1016");
         anfragelisteIspPage = zuordnenPage.doZuordnen();
         anfragelisteIspPage.selectFilterSuchenStatus();
         anfragelisteIspPage.verifySin(sin);
@@ -190,6 +188,8 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         kalkulationImportierenPage.doSuchen();
         kalkulationImportierenPage.doKalkulationImport();
         kalkulationImportierenPage.doSchliessen();
+        offerDashboardPage.verifyFlashMsgSuccessContains("Kalkulation erfolgreich importiert");
+        offerDashboardPage.openAngebotTab();
 
         offerDashboardPage.doLogout();
     }
@@ -294,7 +294,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
     public static User getUserData() {
         User userData = new User();
-        userData.setBenutzername("test1011.admin");
+        userData.setBenutzername("test1016.admin");
         userData.setPasswort("test.admin01");
         return userData;
     }

@@ -36,7 +36,7 @@ public class SimpleBrowserFactory {
         //browserContext = browser.newContext(new Browser.NewContextOptions().setViewportSize(1700, 1000));
         browserContext = browser.newContext();
         page = browserContext.newPage();
-        page.navigate("http://develop.simplardev.telekom.de/");
+        page.navigate("https://develop.simplardev.telekom.de/");
 
         return page;
 

@@ -10,15 +10,18 @@ import de.telekom.simple.ta.enums.LeistungstypItems;
 import de.telekom.simple.ta.pages.MeineVorhabenPage;
 import de.telekom.simple.ta.pages.SimpleStartseitePage;
 import de.telekom.simple.ta.pages.offer.OfferDashboardPage;
+import de.telekom.simple.ta.pages.onka.BerechnungErstellenPage;
 import de.telekom.simple.ta.pages.onka.LeistungenTabPage;
 import de.telekom.simple.ta.pages.sales.SalesDashboardStammdatenPage;
 import de.telekom.simple.ta.testdata.model.User;
 import de.telekom.simple.ta.testdata.simplebase.KalkulationsElementData;
 import de.telekom.simple.ta.testdata.simplebase.LeistungspositionInputData;
+import de.telekom.simple.ta.testdata.simplebase.OnkaBerechnungData;
 import org.testng.annotations.*;
 import testfunctions.LoginFunctions;
 import testfunctions.MeineAngeboteFunctions;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +30,6 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
     Playwright playwright;
     Page page;
     SimpleBrowserFactory browserFactory;
-
     BrowserContext context;
 
     @AfterClass
@@ -35,10 +37,10 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
         playwright.close();
     }
 
-    @AfterMethod
-    void closeContext() {
-        context.close();
-    }
+//    @AfterMethod
+//    void closeContext() {
+//        context.close();
+//    }
 
 
     @Test(groups = {"g_createLP"},
@@ -191,9 +193,84 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
         leistungenTabPage.doLogout();
     }
 
+    @Test(groups = {"g_testCreateBerechnung"},
+            description = "Create new counting")
+    @Parameters({"sin"})
+    public void testCreateBerechnung(@Optional("") String sin) {
+        // Determine SIN to use
+        sin = checkAndHandleSin(sin);
+
+        // Determine login credentials to use for this test case
+        browserFactory = new SimpleBrowserFactory();
+        page = browserFactory.initBrowser("chrome");
+        SimpleLoginPage loginPage = new SimpleLoginPage(page);
+        LoginFunctions.login(loginPage, getUserData());
+        SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
+
+        List<OnkaBerechnungData> berechnungDataList = getTestDataCreateBerechnung();
+
+        MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
+        SalesDashboardStammdatenPage stammdatenPage = vorhabenPage.sinAuswaehlen(sin);
+        OfferDashboardPage offerDashboardPage = stammdatenPage.openOfferDashboard();
+        LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
+        MeineAngeboteFunctions.doLPBerErstellen(offerDashboardPage, berechnungDataList);
+
+        leistungenTabPage.doLogout();
+    }
+
+    @Test(groups = {"g_testEditBerechnung"},
+            description = "Edit a new counting")
+    @Parameters({"sin"})
+    public void testEditBerechnung(@Optional("") String sin) {
+        // Determine SIN to use
+        sin = checkAndHandleSin(sin);
+
+        // Determine login credentials to use for this test case
+        browserFactory = new SimpleBrowserFactory();
+        page = browserFactory.initBrowser("chrome");
+        SimpleLoginPage loginPage = new SimpleLoginPage(page);
+        LoginFunctions.login(loginPage, getUserData());
+        SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
+
+        List<OnkaBerechnungData> berechnungDataList = getTestDataEditBerechnung();
+
+        MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
+        SalesDashboardStammdatenPage stammdatenPage = vorhabenPage.sinAuswaehlen(sin);
+        OfferDashboardPage offerDashboardPage = stammdatenPage.openOfferDashboard();
+        LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
+        MeineAngeboteFunctions.doLPBerBearbeiten(offerDashboardPage, berechnungDataList);
+
+        leistungenTabPage.doLogout();
+    }
+
+    @Test(groups = {"g_testDeleteLpBerechnung"},
+            description = "Delete an updated counting")
+    @Parameters({"sin"})
+    public void testDeleteLpBerechnung(@Optional("") String sin) {
+        // Determine SIN to use
+        sin = checkAndHandleSin(sin);
+
+        // Determine login credentials to use for this test case
+        browserFactory = new SimpleBrowserFactory();
+        page = browserFactory.initBrowser("chrome");
+        SimpleLoginPage loginPage = new SimpleLoginPage(page);
+        LoginFunctions.login(loginPage, getUserData());
+        SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
+
+        List<OnkaBerechnungData> berechnungDataList = getTestDataEditBerechnung();
+
+        MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
+        SalesDashboardStammdatenPage stammdatenPage = vorhabenPage.sinAuswaehlen(sin);
+        OfferDashboardPage offerDashboardPage = stammdatenPage.openOfferDashboard();
+        LeistungenTabPage leistungenTabPage = offerDashboardPage.openLeistungenTab();
+        MeineAngeboteFunctions.doLPBerDelete(offerDashboardPage, berechnungDataList);
+
+        leistungenTabPage.doLogout();
+    }
+
     public static User getUserData() {
         User userData = new User();
-        userData.setBenutzername("test1011.admin");
+        userData.setBenutzername("test1016.admin");
         userData.setPasswort("test.admin01");
         return userData;
     }
@@ -252,6 +329,30 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
         itemData.setKostenart(KostenartItems.ISP_SR_SN_SRSNT1INSTALLATIONSTECHNIKER);
         itemData.setAufwandStunden((short) 8);
         itemData.setBeschreibung("Element wurde aktualisiert.");
+        itemDataList.add(itemData);
+
+        return itemDataList;
+    }
+    private static List<OnkaBerechnungData> getTestDataCreateBerechnung() {
+        List<OnkaBerechnungData> itemDataList = new LinkedList<>();
+        OnkaBerechnungData itemData = new OnkaBerechnungData();
+        itemData.setLeistungspositionsBezeichnung(new String[] {"Leistungsposition 1"});
+        itemData.setBezeichnung("Berechnung 1");
+        itemData.setOperator(BerechnungErstellenPage.OperatorEnumItems.ADDITION);
+        itemData.setWert(new BigDecimal(12));
+        itemData.setKommentar("New computing was created");
+        itemDataList.add(itemData);
+
+        return itemDataList;
+    }
+    private static List<OnkaBerechnungData> getTestDataEditBerechnung() {
+        List<OnkaBerechnungData> itemDataList = new LinkedList<>();
+        OnkaBerechnungData itemData = new OnkaBerechnungData();
+        itemData.setLeistungspositionsBezeichnung(new String[] {"Leistungsposition 1"});
+        itemData.setBezeichnung("Berechnung 1");
+        itemData.setOperator(BerechnungErstellenPage.OperatorEnumItems.MULTIPLIKATION);
+        itemData.setWert(BigDecimal.valueOf(3));
+        itemData.setKommentar("The computing was updated");
         itemDataList.add(itemData);
 
         return itemDataList;

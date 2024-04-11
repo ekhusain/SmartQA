@@ -1,0 +1,49 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite1" verbose="1" thread-count="10" configfailurepolicy="continue" parallel="false">
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+    </listeners>
+    <test name="Suite_CRUD_LP_Element">
+        <groups>
+            <dependencies>
+                <group name="g_testS1AnfrageErstellt" depends-on="g_testNeuesVorhabenAnlegen"/>
+                <group name="g_testS2AngebotserstellerZugeordnet" depends-on="g_testS1AnfrageErstellt"/>
+                <group name="g_testS3BearbeitungBeginnen" depends-on="g_testS2AngebotserstellerZugeordnet"/>
+                <group name="g_createLP" depends-on="g_testS3BearbeitungBeginnen"/>
+                <group name="g_testEditLP" depends-on="g_createLP"/>
+                <group name="g_testCreateElement" depends-on="g_testEditLP"/>
+                <group name="g_testEditElement" depends-on="g_testCreateElement"/>
+                <group name="g_testCreateBerechnung" depends-on="g_testEditElement"/>
+                <group name="g_testEditBerechnung" depends-on="g_testCreateBerechnung"/>
+                <group name="g_testDeleteLpBerechnung" depends-on="g_testEditBerechnung"/>
+                <group name="g_testDeleteElement" depends-on="g_testDeleteLpBerechnung"/>
+                <group name="g_testDeleteLP" depends-on="g_testDeleteElement"/>
+            </dependencies>
+        </groups>
+        <classes>
+            <class name="tests.BasicSuite">
+                <methods>
+                    <include name="testNeuesVorhabenAnlegen"/>
+                    <include name="testS1AnfrageErstellt"/>
+                    <include name="testS2AngebotserstellerZugeordnet"/>
+                    <include name="testS3BearbeitungBeginnen"/>
+                </methods>
+            </class>
+            <class name="tests.SuiteOnkaTests">
+                <methods>
+                    <include name="testCreateLP"/>
+                    <include name="testEditLP"/>
+                    <include name="testCreateElement"/>
+                    <include name="testEditElement"/>
+                    <include name="testDeleteElement"/>
+                    <include name="testDeleteLP"/>
+                    <include name="testCreateBerechnung"/>
+                    <include name="testEditBerechnung"/>
+                    <include name="testDeleteLpBerechnung"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
