@@ -38,26 +38,25 @@ public class NeueLeistungspositionPage extends LeistungenTabPage {
         this.leistungsBeschreibung = page.locator("//textarea[@id='lp-beschreibung']");
         this.inflationsfaktorRessourcen = page.locator("//input[@id='lp-inRessourcen']");
         this.inflationsfaktorKosten = page.locator("//input[@id='lp-inKosten']");
-        this.checkboxAnnuitaetetenRechnen = page.locator("//label[contains(., 'Annuitätenrechnung')]");
+        this.checkboxAnnuitaetetenRechnen = page.getByLabel("Annuitätenrechnung");
         this.leistungsNachAufwand = page.locator("//label[contains(., 'Leistung nach Aufwand')]");
         this.indirekteKosten = page.locator("//label[contains(., 'Indirekte Kosten')]");
         this.lpAnlegenButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Leistungspositionen anlegen"));
-        this.abbrechenButton = page.locator("//button[contains(., 'Abbrechen')]");
+        this.abbrechenButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Abbrechen"));
 
         /*
         Elements from Leistungsposition bearbeiten dialog
          */
         this.lpEditName = page.locator("//input[@id='name']");
         this.editMenge = page.locator("//input[@id='menge']");
-        this.lpEditButton = page.locator("//button[contains(., 'Leistungsposition bearbeiten')]");
-
-        assertThat(page.locator("//label[contains(., 'Leistungsposition')]")).isVisible();
-        assertThat(page.locator("//label[contains(., 'Menge')]")).isVisible();
-        assertThat(page.locator("//label[contains(., 'Leistungstyp')]")).isVisible();
-        assertThat(page.locator("//label[contains(., 'Portfolio')]")).isVisible();
-        assertThat(page.locator("//label[contains(., 'Inflationsfaktor Ressourcen')]")).isVisible();
-        assertThat(page.locator("//label[contains(., 'Inflationsfaktor Kosten')]")).isVisible();
-        assertThat(page.locator("//label[contains(., 'Leistungsbeschreibung')]")).isVisible();
+        this.lpEditButton = page.getByRole(AriaRole.BUTTON).and(page.getByText("Leistungsposition bearbeiten"));
+        assertThat(page.getByLabel("Leistungsposition*")).isVisible();
+        assertThat(page.getByLabel("Menge*")).isVisible();
+        assertThat(page.getByLabel("Leistungstyp")).isVisible();
+        assertThat(page.getByLabel("Portfolio")).isVisible();
+        assertThat(page.getByLabel("Inflationsfaktor Ressourcen")).isVisible();
+        assertThat(page.getByLabel("Inflationsfaktor Kosten")).isVisible();
+        assertThat(page.getByLabel("Leistungsbeschreibung")).isVisible();
     }
 
     public void fillLPData(LeistungspositionInputData inputData) {

@@ -3,6 +3,7 @@ package de.telekom.simple.ta.pages.onka;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.options.AriaRole;
 import de.telekom.simple.ta.enums.SimpleGroupedMenuItems;
 import de.telekom.simple.ta.testdata.simplebase.OnkaBerechnungData;
 import de.telekom.simple.ta.utils.FieldInputUtils;
@@ -17,9 +18,7 @@ public class BerechnungErstellenPage extends LeistungenTabPage {
     private final Locator variable;
     private final Locator wert;
     private final Locator kommentar;
-    //private final Locator berechnungErstellenBtn;
     private final Locator abbrechenBtn;
-    //private final Locator berBearbeitenBtn;
 
     public BerechnungErstellenPage(Page page) {
         super(page);
@@ -29,9 +28,7 @@ public class BerechnungErstellenPage extends LeistungenTabPage {
         this.variable = page.locator("//select[@name='ber-variable']");
         this.wert = page.locator("//input[@id='ber-wert']");
         this.kommentar = page.locator("//textarea[@id='ber-kommentar']");
-        //this.berechnungErstellenBtn = page.locator("//div[@class='modal-content']/descendant::button[contains(., 'Berechnung erstellen')]");
         this.abbrechenBtn = page.locator("//button[contains(., 'Abbrechen')]");
-        //this.berBearbeitenBtn = page.locator("//button[contains(., 'Berechnung bearbeiten')]");
 
         assertThat(page.locator("//label[@id='ber-name__label']")).isVisible();
         assertThat(page.locator("//label[@id='ber-operator__label']")).isVisible();
@@ -43,15 +40,10 @@ public class BerechnungErstellenPage extends LeistungenTabPage {
 
     public enum OperatorEnumItems implements SimpleGroupedMenuItems {
         EMPTY("", ""),
-
         ADDITION("Addition", "+"),
-
         SUBTRAKTION("Subtraktion", "-"),
-
         MULTIPLIKATION("Multiplikation", "*"),
-
         DIVISION("Division", "/"),
-
         ;
         private String valueString;
         private String optgroup;
@@ -73,7 +65,6 @@ public class BerechnungErstellenPage extends LeistungenTabPage {
 
     public enum VariableEnumItems implements SimpleGroupedMenuItems {
         EMPTY("", ""),
-
         ;
         private String valueString;
         private String optgroup;
@@ -99,7 +90,6 @@ public class BerechnungErstellenPage extends LeistungenTabPage {
     public enum ZielobjektEnumItems implements SimpleGroupedMenuItems {
         KALKULATIONSELEMENT("Kalkulationselement", ""),
         LEISTUNGSPOSITION("Leistungsposition", ""),
-
         ;
         private String valueString;
         private String optgroup;
@@ -131,11 +121,11 @@ public class BerechnungErstellenPage extends LeistungenTabPage {
     }
 
     public BrowserContext doBerechnungErstellen() {
-        page.locator("//div[@class='modal-content']/descendant::button[contains(., 'Berechnung erstellen')]").click();
+        page.getByRole(AriaRole.BUTTON).and(page.getByText("Berechnung erstellen")).click();
         return page.context();
     }
     public BrowserContext doBerechnungBearbeiten() {
-        page.locator("//div[@class='modal-content']/descendant::button[contains(., 'Berechnung bearbeiten')]").click();
+        page.getByRole(AriaRole.BUTTON).and(page.getByText("Berechnung bearbeiten")).click();
         return page.context();
     }
 

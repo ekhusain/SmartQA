@@ -27,17 +27,17 @@ public class SimpleAlertPage {
     }
 
     public LeistungenTabPage doLpLoschen() {
-        page.locator("//button[contains(., 'Leistungsposition löschen')]").click();
+        page.getByRole(AriaRole.BUTTON).and(page.getByText("Leistungsposition löschen")).click();
         return new LeistungenTabPage(page);
     }
 
     public LeistungenTabPage doElementLoschen() {
-        page.locator("//button[contains(., 'Element löschen')]").click();
+        page.getByRole(AriaRole.BUTTON).and(page.getByText("Element löschen")).click();
         return new LeistungenTabPage(page);
     }
 
     public LeistungenTabPage doBerechnungLoeschen() {
-        page.locator("//button[contains(., 'Berechnung löschen')]").click();
+        page.getByRole(AriaRole.BUTTON).and(page.getByText("Berechnung löschen")).click();
         return new LeistungenTabPage(page);
     }
 
