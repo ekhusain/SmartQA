@@ -3,9 +3,7 @@ stages:
 
 test:
   stage: test
-  image: "$MTR_MCICD_HOST/$MTR_ORGANIZATION/playwright:v1.41.1-jammy"
-    # just a copy of:
-  # mcr.microsoft.com/playwright:v1.41.1-jammy
+  image: mcr.microsoft.com/playwright/java:v1.44.0-jammy
   script:
     - mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
     - mvn test
