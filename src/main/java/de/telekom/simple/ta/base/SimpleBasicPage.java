@@ -19,6 +19,7 @@ public class SimpleBasicPage {
     private final Locator toastMsgError;
     private final Locator closeToastMsg;
     private final Locator abmeldenButton;
+    private final Locator benutzerProfil;
 
     public SimpleBasicPage(Page page) {
         this.page = page;
@@ -27,7 +28,8 @@ public class SimpleBasicPage {
         this.toastMsgSuccess = page.locator("//*[@class='b-toast b-toast-append flash-message success']");
         this.toastMsgError = page.locator("//*[@class='b-toast b-toast-append flash-message error']");
         this.closeToastMsg = page.locator("//a[contains(@class, 'toasts-close-button')]");
-        this.abmeldenButton = page.locator("//button[@title='Abmelden']");
+        this.abmeldenButton = page.locator("//a[contains(.,'Abmelden')]");
+        this.benutzerProfil = page.locator("//button/span[.='Benutzerprofil']");
 
     }
 
@@ -53,6 +55,7 @@ public class SimpleBasicPage {
 
     public void doLogout() {
         pause(2000);
+        benutzerProfil.click();
         abmeldenButton.click();
         //return page.context();
     }

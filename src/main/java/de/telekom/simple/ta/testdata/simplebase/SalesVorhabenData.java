@@ -14,6 +14,7 @@ public class SalesVorhabenData {
     private String vorhabenname = null;
     private BigDecimal volumenDtts = null;
     private String kundenname = null;
+    private String kundennummer;
 
     /*
             Klassifizierung parameters
@@ -149,6 +150,13 @@ public class SalesVorhabenData {
 
     public void setAbgeschlossenGrund(AuftragBeendenPage.AuftragBeendenEnumItems abgeschlossenGrund) {
         this.abgeschlossenGrund = abgeschlossenGrund;
+    }
+    public String getKundennummer() {
+        return kundennummer;
+    }
+
+    public void setKundennummer(String kundennummer) {
+        this.kundennummer = kundennummer;
     }
 
 }

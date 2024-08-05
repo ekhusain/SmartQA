@@ -3,7 +3,6 @@ package de.telekom.simple.ta.pages.sales;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import de.telekom.simple.ta.testdata.simplebase.SalesVorhabenData;
 
 public class KundeSuchenPage {
@@ -21,12 +20,14 @@ public class KundeSuchenPage {
         this.kundenname = page.locator("//input[@id='kundenname-input']");
         this.gpNummer = page.locator("//input[@id='gpNummer-input']");
         this.kundennummer = page.locator("//input[@id='kundennummer-input']");
-        this.suchenButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Suchen"));
+        //this.suchenButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Suchen"));
+        this.suchenButton = page.locator("//button[contains(., 'Suchen')]");
 
     }
 
     public BrowserContext fillCustomerForSearch(SalesVorhabenData vorhabenData) {
         kundenname.fill(vorhabenData.getKundenname());
+        kundennummer.fill(vorhabenData.getKundennummer());
         return page.context();
     }
 
@@ -35,7 +36,7 @@ public class KundeSuchenPage {
     }
 
     public NeuesVorhabenAnlegenPage doAuswaehlen(NeuesVorhabenAnlegenPage anlegenPage, SalesVorhabenData data) {
-        auswaehlenButton = page.locator("//*[@id='customer-items-list']/div[1]/div[contains(., '" + data.getKundenname() +"')]//following-sibling::div/button");
+        auswaehlenButton = page.locator("//li/div[1]/div[contains(., '" + data.getKundenname() +"')]//following-sibling::div/button");
         auswaehlenButton.click();
         return anlegenPage;
     }

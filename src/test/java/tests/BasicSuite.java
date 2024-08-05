@@ -287,7 +287,8 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         vorhabenData.setSicherheitsstufe(NeuesVorhabenAnlegenPage.SicherheitsstufeEnumItems.STANDARD);
         vorhabenData.setVorhabenname("Test name");
         vorhabenData.setVolumenDtts(new BigDecimal("100000"));
-        vorhabenData.setKundenname("Adbananicator");
+        vorhabenData.setKundenname("MustHave GmbH");
+        vorhabenData.setKundennummer("2710134435");
 
         return vorhabenData;
     }

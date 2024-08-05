@@ -36,7 +36,7 @@ public class SalesDashboardStammdatenPage extends SimpleBasicPage {
     public SalesDashboardStammdatenPage(Page page) {
         super(page);
         this.page = page;
-        this.sin = page.locator("//div[@class='label-text' and .='SIN']/following-sibling::div[1]");
+        this.sin = page.locator("//*[@id=\"dashboard-header\"]/div/div[1]/div[1]");
         this.vorhaben = page.locator("//div[@class='label-text' and .='Vorhaben · Kunde']/following-sibling::div[1]");
         this.status = page.locator("//div[@class='label-text' and .='Status']/following-sibling::div[1]");
         this.einstellungenButton = page.locator("//div[@id='workflowButtonDropdown']");
@@ -44,15 +44,15 @@ public class SalesDashboardStammdatenPage extends SimpleBasicPage {
         this.stammdatenTab = page.locator("//span[@class='text' and .='Stammdaten']");
         this.vorhabenDataEdit = page.locator("//div[@id='editProject']");
         this.kundenDataEdit = page.locator("//div[@id='customerEdit']");
-        this.klassifizierungHinzufuegenButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Klassifizierung hinzufügen"));
+        this.klassifizierungHinzufuegenButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Klassifizierung bearbeiten"));
         this.weitereMerkmaleEdit = page.getByTitle("Merkmale bearbeiten");
-        this.angebotAnfordernLink = page.locator("//li/a/span[contains(., 'Angebot anfordern')]");
-        this.bearbeitungBeginnenLink = page.locator("//li/a/span[contains(., 'Bearbeitung beginnen')]");
+        this.angebotAnfordernLink = page.locator("//li/a[contains(., 'Angebot anfordern')]");
+        this.bearbeitungBeginnenLink = page.locator("//li/a[contains(., 'Bearbeitung beginnen')]");
         this.dashboardSwitch = page.locator("//div[@id='dashboard-switch']");
-        this.offerDashboardLink = page.locator("//div[@title='Offer Dashboard']");
-        this.angebotBeauftragenLink = page.locator("//li/a/span[contains(., 'Angebot beauftragen')]");
-        this.produktionsreifeBestaetigen = page.locator("//li/a/span[contains(., 'Produktionsreife bestätigen')]");
-        this.auftragBeendenLink = page.locator("//li/a/span[contains(., 'Auftrag beenden')]");
+        this.offerDashboardLink = page.locator("//div/div[2][contains(., 'Offer Dashboard')]");
+        this.angebotBeauftragenLink = page.locator("//li/a[contains(., 'Angebot beauftragen')]");
+        this.produktionsreifeBestaetigen = page.locator("//li/a[contains(., 'Produktionsreife bestätigen')]");
+        this.auftragBeendenLink = page.locator("//li/a[contains(., 'Vertrag beenden')]");
         
     }
 

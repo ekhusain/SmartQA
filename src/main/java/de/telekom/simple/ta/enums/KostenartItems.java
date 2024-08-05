@@ -7,7 +7,7 @@ public enum KostenartItems implements SimpleGroupedMenuItems
 {
     EMPTY("", ""),
 
-    ISP_SR_SN_SRSNT1INSTALLATIONSTECHNIKER("ISP - SR S/N T1 - Installationstechniker Installationstechniker", ""),
+    ISP_SR_SN_SRSNT1INSTALLATIONSTECHNIKER("ISP - SR S/N T1 - Installationstechniker", ""),
 
     ISP_SR_SN_SRSNT2FIELDSERVICETECHNIKER("ISP - SR S/N T2 - Fieldservice Techniker", ""),
 
