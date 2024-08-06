@@ -36,7 +36,18 @@ public class SimpleBrowserFactory {
         //browserContext = browser.newContext(new Browser.NewContextOptions().setViewportSize(1700, 1000));
         browserContext = browser.newContext();
         page = browserContext.newPage();
+
+        // Start tracing before creating / navigating a page.
+        browserContext.tracing().start(new Tracing.StartOptions()
+                .setScreenshots(true)
+                .setSnapshots(true)
+                .setSources(true));
+
         page.navigate("https://develop.simplardev.telekom.de/");
+
+        // Stop tracing and export it into a zip archive.
+        browserContext.tracing().stop(new Tracing.StopOptions()
+                .setPath(Paths.get("trace.zip")));
 
         return page;
 

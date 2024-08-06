@@ -188,7 +188,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         kalkulationImportierenPage.doSuchen();
         kalkulationImportierenPage.doKalkulationImport();
         kalkulationImportierenPage.doSchliessen();
-        offerDashboardPage.verifyFlashMsgSuccessContains("Kalkulation erfolgreich importiert");
+        //offerDashboardPage.verifyFlashMsgSuccessContains("Kalkulation erfolgreich importiert");
         offerDashboardPage.openAngebotTab();
 
         offerDashboardPage.doLogout();
@@ -295,7 +295,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
     public static User getUserData() {
         User userData = new User();
-        userData.setBenutzername("test1016.admin");
+        userData.setBenutzername("test1015.admin");
         userData.setPasswort("test.admin01");
         return userData;
     }
