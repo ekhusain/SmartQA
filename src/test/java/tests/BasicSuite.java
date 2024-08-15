@@ -46,9 +46,14 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setExecutablePath(Paths.get("C:/Users/A11336979/AppData/Local/ms-playwright/chrome-win/chrome.exe")).setHeadless(false));
     }
 
+//    @AfterClass
+//    void closeBrowser() {
+//        playwright.close();
+//    }
+
     @AfterClass
     void closeBrowser() {
-        playwright.close();
+        page.context().browser().close();
     }
 
     @BeforeMethod
@@ -341,13 +346,5 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         vorhabenData.setAbgeschlossenGrund(AuftragBeendenPage.AuftragBeendenEnumItems.VERTRAG_BEENDET);
         return vorhabenData;
     }
-
-//    @AfterClass
-//    void closeBrowser() {
-//        page.context().browser().close();
-//    }
-//    void closeBrowser() {
-//        context.close();
-//    }
 
 }

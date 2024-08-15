@@ -34,7 +34,7 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @AfterClass
     void closeBrowser() {
-        playwright.close();
+        page.context().browser().close();
     }
 
 //    @AfterMethod
