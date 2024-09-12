@@ -8,10 +8,10 @@ import de.telekom.simple.ta.enums.DebitorEnumItems;
 import de.telekom.simple.ta.pages.*;
 import de.telekom.simple.ta.pages.offer.*;
 import de.telekom.simple.ta.pages.sales.*;
+import de.telekom.simple.ta.testdata.model.User;
+import de.telekom.simple.ta.testdata.simplebase.BeauftragungDurchfuehrenData;
 import de.telekom.simple.ta.testdata.simplebase.SalesVorhabenData;
 import de.telekom.simple.ta.testdata.simplebase.SimpleOnlineKalkulationData;
-import de.telekom.simple.ta.testdata.simplebase.BeauftragungDurchfuehrenData;
-import de.telekom.simple.ta.testdata.model.User;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Disabled;
 import org.testng.annotations.*;
@@ -87,8 +87,14 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     @Description("Neues Vorhaben anlegen")
     @Severity(SeverityLevel.BLOCKER)
     @Attachment("true")
-    public void testNeuesVorhabenAnlegen() {
+    public void testNeuesVorhabenAnlegen(@Optional("") String username,
+                                         @Optional("") String userSetNumber) {
         loginPage = new SimpleLoginPage(page);
+//        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+//
+//        int maxUserSearchRetriesNum = PropertyManager.getIntProperty(SimpleTAProperties.MAX_NUMBER_USER_SEARCH_RETRIES, 0);
+//        logger.info("Using maximum number of retries for user search: " + maxUserSearchRetriesNum);
+
         LoginFunctions.login(loginPage, getUserData());
         startseitePage = new SimpleStartseitePage(page);
         startseitePage.doNeuesVorhabenAnlegen();

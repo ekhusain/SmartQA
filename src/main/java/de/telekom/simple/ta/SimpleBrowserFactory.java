@@ -57,7 +57,7 @@ public class SimpleBrowserFactory {
      * Setup of configuration of browser to test with
      */
     public class loadBrowserConfig {
-        public static void main(String[] args) {
+        public void main(String[] args) {
             try (Playwright playwright = Playwright.create()) {
                 BrowserType chromium = playwright.chromium();
                 JsonObject jsonObject = new JsonObject();
