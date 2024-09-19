@@ -8,12 +8,16 @@ import de.telekom.simple.ta.enums.DebitorEnumItems;
 import de.telekom.simple.ta.pages.*;
 import de.telekom.simple.ta.pages.offer.*;
 import de.telekom.simple.ta.pages.sales.*;
+import de.telekom.simple.ta.testdata.Users;
+import de.telekom.simple.ta.testdata.common.SimpleUserRole;
 import de.telekom.simple.ta.testdata.model.User;
 import de.telekom.simple.ta.testdata.simplebase.BeauftragungDurchfuehrenData;
 import de.telekom.simple.ta.testdata.simplebase.SalesVorhabenData;
 import de.telekom.simple.ta.testdata.simplebase.SimpleOnlineKalkulationData;
+import de.telekom.simple.ta.utils.UserSetNumberPool;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Disabled;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 import testfunctions.LoginFunctions;
 import testfunctions.MeineAngeboteFunctions;
@@ -57,7 +61,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @BeforeMethod
-    void createContextAndPage() {
+    void createContextAndPage(ITestContext contextI) {
         playwright = Playwright.create();
         //browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setExecutablePath(Paths.get("C:/Users/A11336979/AppData/Local/ms-playwright/chrome-win/chrome.exe")).setHeadless(false));
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
@@ -65,7 +69,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
         context = browser.newContext();
         page = context.newPage();
         page.navigate("https://develop.simplardev.telekom.de/");
-
+        UserSetNumberPool.setThreadCount(contextI);
     }
 
     @AfterMethod
@@ -85,17 +89,15 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testNeuesVorhabenAnlegen"}, description = "Neues Vorhaben anlegen")
     @Description("Neues Vorhaben anlegen")
+    @Parameters({"username", "userSetNumber"})
     @Severity(SeverityLevel.BLOCKER)
     @Attachment("true")
     public void testNeuesVorhabenAnlegen(@Optional("") String username,
                                          @Optional("") String userSetNumber) {
         loginPage = new SimpleLoginPage(page);
-//        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
-//
-//        int maxUserSearchRetriesNum = PropertyManager.getIntProperty(SimpleTAProperties.MAX_NUMBER_USER_SEARCH_RETRIES, 0);
-//        logger.info("Using maximum number of retries for user search: " + maxUserSearchRetriesNum);
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
 
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
         startseitePage.doNeuesVorhabenAnlegen();
 
@@ -113,14 +115,17 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test(groups = {"g_testS1AnfrageErstellt"}, description = "S1 Anfrage Erstellt")
-    @Parameters({"sin"})
-    public void testS1AnfrageErstellt(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testS1AnfrageErstellt(@Optional("") String sin,
+                                      @Optional("") String username,
+                                      @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
@@ -136,14 +141,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test(groups = {"g_testS2AngebotserstellerZugeordnet"}, description = "S2 Angebotsersteller zuordnen")
-    @Parameters({"sin"})
-    public void testS2AngebotserstellerZugeordnet(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testS2AngebotserstellerZugeordnet(@Optional("") String sin, @Optional("") String username,
+                                                  @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         AnfragelisteIspPage anfragelisteIspPage = startseitePage.openAnfrageListeISP();
@@ -157,14 +164,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test(groups = {"g_testS3BearbeitungBeginnen"}, description = "S3 Bearbeitung beginnen")
-    @Parameters({"sin"})
-    public void testS3BearbeitungBeginnen(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testS3BearbeitungBeginnen(@Optional("") String sin, @Optional("") String username,
+                                          @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
@@ -177,14 +186,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testKalkulationImport"},
             description = "Kalkulation importieren with AP, LP and Ber")
-    @Parameters({"sin"})
-    public void testKalkulationImport(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testKalkulationImport(@Optional("") String sin, @Optional("") String username,
+                                      @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
@@ -206,14 +217,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test(groups = {"g_testWorkflowFunctions"}, description = "Angebotsgueltigkeit und Datei hinzufuegen")
-    @Parameters({"sin"})
-    public void testWorkflowFunctions(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testWorkflowFunctions(@Optional("") String sin, @Optional("") String username,
+                                      @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         MeineVorhabenPage vorhabenPage = startseitePage.openMeineVorhaben();
@@ -230,14 +243,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test(groups = {"g_testAngebotBeauftragung"}, description = "Angebot beauftragen, project moved to S6PR")
-    @Parameters({"sin"})
-    public void testAngebotBeauftragung(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testAngebotBeauftragung(@Optional("") String sin, @Optional("") String username,
+                                        @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         BeauftragungDurchfuehrenData beauftragenData = getAngebotBeauftragen();
@@ -252,14 +267,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
 
     @Test(groups = {"g_testProduktionsreifeBestaetigen"}, description = "Produktionsreife bestaetigen, project moved to S6")
-    @Parameters({"sin"})
-    public void testProduktionsreifeBestaetigen(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testProduktionsreifeBestaetigen(@Optional("") String sin, @Optional("") String username,
+                                                @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         BeauftragungDurchfuehrenData beaufttagenData = getAngebotBeauftragen();
@@ -272,14 +289,16 @@ public class BasicSuite extends SinPassingOrConsumingTests {
     }
 
     @Test(groups = {"g_testS7AuftragBeenden"}, description = "Auftrag beenden, project moved to S7")
-    @Parameters({"sin"})
-    public void testS7AuftragBeenden(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testS7AuftragBeenden(@Optional("") String sin, @Optional("") String username,
+                                     @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+        LoginFunctions.login(loginPage, user);
         startseitePage = new SimpleStartseitePage(page);
 
         SalesVorhabenData data = getTestDataS7();
@@ -306,7 +325,7 @@ public class BasicSuite extends SinPassingOrConsumingTests {
 
     public static User getUserData() {
         User userData = new User();
-        userData.setBenutzername("test1015.admin");
+        userData.setBenutzername("test1016.admin");
         userData.setPasswort("test.admin01");
         return userData;
     }
