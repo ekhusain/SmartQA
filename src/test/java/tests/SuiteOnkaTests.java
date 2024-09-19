@@ -13,6 +13,8 @@ import de.telekom.simple.ta.pages.offer.OfferDashboardPage;
 import de.telekom.simple.ta.pages.onka.BerechnungErstellenPage;
 import de.telekom.simple.ta.pages.onka.LeistungenTabPage;
 import de.telekom.simple.ta.pages.sales.SalesDashboardStammdatenPage;
+import de.telekom.simple.ta.testdata.Users;
+import de.telekom.simple.ta.testdata.common.SimpleUserRole;
 import de.telekom.simple.ta.testdata.model.User;
 import de.telekom.simple.ta.testdata.simplebase.KalkulationsElementData;
 import de.telekom.simple.ta.testdata.simplebase.LeistungspositionInputData;
@@ -45,8 +47,9 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_createLP"},
             description = "Create new Leistung position")
-    @Parameters({"sin"})
-    public void testCreateLP(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testCreateLP(@Optional("") String sin, @Optional("") String username,
+                             @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
@@ -54,7 +57,9 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<LeistungspositionInputData> inputData = getTestDataLeistungspositionen();
@@ -70,16 +75,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testEditLP"},
             description = "Edit Leistungsposition")
-    @Parameters({"sin"})
-    public void testEditLP(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testEditLP(@Optional("") String sin, @Optional("") String username,
+                           @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<LeistungspositionInputData> inputData = getTestDataLPBearbeiten();
@@ -95,16 +103,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testDeleteLP"},
             description = "Delete existing Leistungsposition")
-    @Parameters({"sin"})
-    public void testDeleteLP(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testDeleteLP(@Optional("") String sin, @Optional("") String username,
+                             @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<LeistungspositionInputData> inputData = getTestDataLPBearbeiten();
@@ -120,16 +131,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testCreateElement"},
             description = "Create new calculation element")
-    @Parameters({"sin"})
-    public void testCreateElement(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testCreateElement(@Optional("") String sin, @Optional("") String username,
+                                  @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<KalkulationsElementData> elementData = getTestDataCreateElement();
@@ -145,16 +159,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testEditElement"},
             description = "Update an existing calculation element")
-    @Parameters({"sin"})
-    public void testEditElement(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testEditElement(@Optional("") String sin, @Optional("") String username,
+                                @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<KalkulationsElementData> elementData = getTestDataEditElement();
@@ -170,16 +187,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testDeleteElement"},
             description = "Delete an existing calculation element")
-    @Parameters({"sin"})
-    public void testDeleteElement(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testDeleteElement(@Optional("") String sin, @Optional("") String username,
+                                  @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<KalkulationsElementData> elementData = getTestDataEditElement();
@@ -195,16 +215,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testCreateBerechnung"},
             description = "Create new counting")
-    @Parameters({"sin"})
-    public void testCreateBerechnung(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testCreateBerechnung(@Optional("") String sin, @Optional("") String username,
+                                     @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<OnkaBerechnungData> berechnungDataList = getTestDataCreateBerechnung();
@@ -220,16 +243,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testEditBerechnung"},
             description = "Edit a new counting")
-    @Parameters({"sin"})
-    public void testEditBerechnung(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testEditBerechnung(@Optional("") String sin, @Optional("") String username,
+                                   @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<OnkaBerechnungData> berechnungDataList = getTestDataEditBerechnung();
@@ -245,16 +271,19 @@ public class SuiteOnkaTests extends SinPassingOrConsumingTests {
 
     @Test(groups = {"g_testDeleteLpBerechnung"},
             description = "Delete an updated counting")
-    @Parameters({"sin"})
-    public void testDeleteLpBerechnung(@Optional("") String sin) {
+    @Parameters({"sin", "username", "userSetNumber"})
+    public void testDeleteLpBerechnung(@Optional("") String sin, @Optional("") String username,
+                                       @Optional("") String userSetNumber) {
         // Determine SIN to use
         sin = checkAndHandleSin(sin);
 
         // Determine login credentials to use for this test case
         browserFactory = new SimpleBrowserFactory();
         page = browserFactory.initBrowser("chrome");
+        User user = Users.determineUser(SimpleUserRole.ADMINISTRATOR, userSetNumber, username);
+
         SimpleLoginPage loginPage = new SimpleLoginPage(page);
-        LoginFunctions.login(loginPage, getUserData());
+        LoginFunctions.login(loginPage, user);
         SimpleStartseitePage startseitePage = new SimpleStartseitePage(page);
 
         List<OnkaBerechnungData> berechnungDataList = getTestDataEditBerechnung();
